@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>I'm Sorry ❤️</title>
+<style>
+ body { text-align:center; font-family:sans-serif; margin-top:100px; }
+ button { padding:10px 20px; font-size:18px; margin:10px; }
+</style>
+</head>
+<body>
+
+<h2>Will you forgive me? 🥺</h2>
+
+<button onclick="yes()">Yes ❤️</button>
+<button onmouseover="move(this)">No 😒</button>
+
+<script>
+function yes(){
+ document.body.innerHTML = "<h1>Thank you ❤️ I promise to make it right 🥺</h1>";
+}
+
+function move(btn){
+ btn.style.position = "absolute";
+ btn.style.top = Math.random()*300 + "px";
+ btn.style.left = Math.random()*300 + "px";
+}
+</script>
+
+</body>
+</html>
