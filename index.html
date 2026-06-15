@@ -1,128 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>I'm Sorry ❤️</title>
+<!-- Add this after </div> and before <script> -->
 
-<style>
-body{
-    margin:0;
-    overflow:hidden;
-    font-family:Arial,sans-serif;
-
-    /* Uses your uploaded image */
-    background:
-        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
-        url("background.jpg");
-
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    flex-direction:column;
-    text-align:center;
-}
-
-/* Floating Emojis */
-
-.emoji{
-    position:absolute;
-    font-size:35px;
-    animation:float 12s linear infinite;
-    opacity:0.75;
-    user-select:none;
-    pointer-events:none;
-}
-
-@keyframes float{
-    from{
-        transform:translateY(110vh) rotate(0deg);
-    }
-    to{
-        transform:translateY(-120vh) rotate(360deg);
-    }
-}
-
-/* Glass Card */
-
-.container{
-    background:rgba(255,255,255,0.18);
-    backdrop-filter:blur(15px);
-    -webkit-backdrop-filter:blur(15px);
-
-    padding:35px;
-    border-radius:25px;
-
-    border:1px solid rgba(255,255,255,0.3);
-
-    box-shadow:0 8px 30px rgba(0,0,0,0.25);
-
-    z-index:10;
-}
-
-h1{
-    color:white;
-    text-shadow:2px 2px 8px rgba(0,0,0,0.5);
-    animation:pulse 2s infinite;
-}
-
-p{
-    color:white;
-    font-size:20px;
-    text-shadow:1px 1px 6px rgba(0,0,0,0.5);
-}
-
-@keyframes pulse{
-    50%{
-        transform:scale(1.05);
-    }
-}
-
-button{
-    padding:14px 28px;
-    font-size:20px;
-    border:none;
-    border-radius:30px;
-    margin:15px;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-#yesBtn{
-    background:#ff4f8b;
-    color:white;
-}
-
-#yesBtn:hover{
-    transform:scale(1.08);
-}
-
-#noBtn{
-    background:white;
-    color:#444;
-}
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-<h1>🥺 Will you forgive me? ❤️</h1>
-
-<p>I really didn't mean to hurt you... 💖</p>
-
-<button id="yesBtn" onclick="yesClicked()">Yes ❤️</button>
-
-<button id="noBtn" onmouseover="moveButton()">No 😒</button>
-
-</div>
+<audio id="voiceMessage">
+    <source src="voice.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
 
 <script>
 
@@ -160,36 +41,52 @@ btn.style.top=Math.random()*(window.innerHeight-60)+"px";
 
 function yesClicked(){
 
-document.body.innerHTML=`
+    // Start playing the voice message
+    const audio = document.getElementById("voiceMessage");
+    audio.play();
 
-<div style="display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;
-background:
-linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
-url('background.jpg');
-background-size:cover;
-background-position:center;
-font-family:Arial,sans-serif;">
+    // Replace the page with the thank you screen
+    document.body.innerHTML = `
 
-<div style="background:rgba(255,255,255,0.18);
-backdrop-filter:blur(15px);
-padding:35px;
-border-radius:25px;">
+    <div style="
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+        flex-direction:column;
+        background:
+        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+        url('background.jpg');
+        background-size:cover;
+        background-position:center;
+        font-family:Arial,sans-serif;
+        text-align:center;
+    ">
 
-<h1 style="font-size:55px;color:white;">🥹 Thank You ❤️</h1>
+        <div style="
+            background:rgba(255,255,255,0.18);
+            backdrop-filter:blur(15px);
+            padding:35px;
+            border-radius:25px;
+            border:1px solid rgba(255,255,255,0.3);
+        ">
 
-<h2 style="color:white;">I promise to make everything right 💖</h2>
+            <h1 style="font-size:55px;color:white;">🥹 Thank You ❤️</h1>
 
-<div style="font-size:70px;">🫶 🌸 💕 ✨ ❤️</div>
+            <h2 style="color:white;">
+                I promise to make everything right 💖
+            </h2>
 
-</div>
+            <div style="font-size:70px;">
+                🫶 🌸 💕 ✨ ❤️
+            </div>
 
-</div>
+        </div>
 
-`;
+    </div>
+
+    `;
 
 }
 
 </script>
-
-</body>
-</html>
