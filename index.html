@@ -147,36 +147,40 @@ btn.style.top=Math.random()*(window.innerHeight-60)+"px";
   
 }  
   
-function yesClicked(){  
-  
-document.body.innerHTML=`  
-  
-<div style="display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;  
-background:  
-linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),  
-url('background.jpg');  
-background-size:cover;  
-background-position:center;  
-font-family:Arial,sans-serif;">  
-  
-<div style="background:rgba(255,255,255,0.18);  
-backdrop-filter:blur(15px);  
-padding:35px;  
-border-radius:25px;">  
-  
-<h1 style="font-size:55px;color:white;">🥹 Thank You ❤️</h1>  
-  
-<h2 style="color:white;">I promise to make everything right 💖</h2>  
-  
-<div style="font-size:70px;">🫶 🌸 💕 ✨ ❤️</div>  
-  
-</div>  
-  
-</div>  
-  
-`;  
-  
-}  
+function yesClicked(){
+
+    // Play the voice message
+    const audio = document.getElementById("voiceMessage");
+
+    if(audio){
+        audio.play().catch(function(err){
+            console.log(err);
+        });
+    }
+
+    // Hide the original card
+    document.querySelector(".container").style.display = "none";
+
+    // Create the thank you card
+    const thankYouCard = document.createElement("div");
+
+    thankYouCard.className = "container";
+
+    thankYouCard.innerHTML = `
+        <h1 style="font-size:55px;">🥹 Thank You ❤️</h1>
+
+        <h2 style="color:white;">
+            I promise to make everything right 💖
+        </h2>
+
+        <div style="font-size:70px;">
+            🫶 🌸 💕 ✨ ❤️
+        </div>
+    `;
+
+    document.body.appendChild(thankYouCard);
+
+}
   
 </script>  </body>  
 </html>
