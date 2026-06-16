@@ -135,7 +135,7 @@ e.style.animationDelay=Math.random()*8+"s";
 document.body.appendChild(e);  
   
 }  
-  
+  /*
 function moveButton(){
 
 const btn = document.getElementById("noBtn");
@@ -159,6 +159,37 @@ btn.style.left = newX + "px";
 btn.style.top = newY + "px";
 
 }  
+*/
+    const noBtn = document.getElementById("noBtn");
+
+let moved = false;
+
+document.addEventListener("mousemove", function(e){
+
+    const rect = noBtn.getBoundingClientRect();
+
+    const distance = Math.hypot(
+        e.clientX - (rect.left + rect.width/2),
+        e.clientY - (rect.top + rect.height/2)
+    );
+
+    if(distance < 90){
+
+        if(!moved){
+            noBtn.style.position = "absolute";
+            moved = true;
+        }
+
+        const xPositions = [20, 140, 260];
+        const yPositions = [120, 170, 220];
+
+        const x = xPositions[Math.floor(Math.random() * xPositions.length)];
+        const y = yPositions[Math.floor(Math.random() * yPositions.length)];
+
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+    }
+});
   
 function yesClicked(){
 
