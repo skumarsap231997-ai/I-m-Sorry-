@@ -195,20 +195,39 @@ function yesClicked(){
 }
   
 
+
 document.addEventListener("mousemove", function(e){
 
     const btn = document.getElementById("noBtn");
+    if(!btn) return;
+
     const rect = btn.getBoundingClientRect();
 
+    const centerX = rect.left + rect.width/2;
+    const centerY = rect.top + rect.height/2;
+
     const distance = Math.hypot(
-        e.clientX - (rect.left + rect.width/2),
-        e.clientY - (rect.top + rect.height/2)
+        e.clientX - centerX,
+        e.clientY - centerY
     );
 
-    if(distance < 120){
-        moveButton();
+    if(distance < 100){
+
+        const btnWidth = rect.width;
+        const btnHeight = rect.height;
+
+        const maxX = window.innerWidth - btnWidth - 20;
+        const maxY = window.innerHeight - btnHeight - 20;
+
+        const newX = Math.max(20, Math.min(maxX, Math.random() * maxX));
+        const newY = Math.max(20, Math.min(maxY, Math.random() * maxY));
+
+        btn.style.position = "fixed";
+        btn.style.left = newX + "px";
+        btn.style.top = newY + "px";
     }
 });
 
-</script>  </body>  
+</script>
+  </body>  
 </html>
