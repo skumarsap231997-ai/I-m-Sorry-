@@ -105,7 +105,7 @@ button{
 }  
 </style>  </head>  <body>  <div class="container">  <h1>🥺 Will you forgive me? ❤️</h1>  <p>I really didn't mean to hurt you... 💖</p>  <button id="yesBtn" onclick="yesClicked()">Yes ❤️</button>
 
-<button id="noBtn">No 😒</button>
+<button id="noBtn" onmouseover="moveButton()" onmouseenter="moveButton()">No 😒</button>
 
 </div>  
 <audio id="voiceMessage" preload="auto">
@@ -135,16 +135,18 @@ document.body.appendChild(e);
   
 }  
   
-function moveButton(){  
-  
-const btn=document.getElementById("noBtn");  
-  
-btn.style.position="absolute";  
-  
-btn.style.left=Math.random()*(window.innerWidth-120)+"px";  
-  
-btn.style.top=Math.random()*(window.innerHeight-60)+"px";  
-  
+function moveButton(){
+
+const btn=document.getElementById("noBtn");
+
+btn.style.position="fixed";
+
+const maxX=window.innerWidth-btn.offsetWidth-20;
+const maxY=window.innerHeight-btn.offsetHeight-20;
+
+btn.style.left=Math.random()*maxX+"px";
+btn.style.top=Math.random()*maxY+"px";
+
 }  
   
 function yesClicked(){
@@ -174,7 +176,7 @@ function yesClicked(){
         </h2>
 
         <img
-            src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
+            src="https://media.giphy.com/media/ftAwcy5J6JX7G/giphy.gif"
             alt="Cute celebration"
             style="width:260px;max-width:90%;border-radius:18px;margin:20px auto;display:block;"
         />
@@ -192,5 +194,21 @@ function yesClicked(){
 
 }
   
+
+document.addEventListener("mousemove", function(e){
+
+    const btn = document.getElementById("noBtn");
+    const rect = btn.getBoundingClientRect();
+
+    const distance = Math.hypot(
+        e.clientX - (rect.left + rect.width/2),
+        e.clientY - (rect.top + rect.height/2)
+    );
+
+    if(distance < 120){
+        moveButton();
+    }
+});
+
 </script>  </body>  
 </html>
