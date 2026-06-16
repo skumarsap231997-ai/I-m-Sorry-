@@ -186,7 +186,7 @@ function yesClicked(){
         </h2>
 
         <img
-            src="https://media.giphy.com/media/ftAwcy5J6JX7G/giphy.gif"
+            src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
             alt="Cute celebration"
             style="width:260px;max-width:90%;border-radius:18px;margin:20px auto;display:block;"
         />
@@ -209,39 +209,48 @@ function yesClicked(){
 
 document.addEventListener("mousemove", function(e){
 
-    const btn = document.getElementById("noBtn");
-    if(!btn) return;
+const btn = document.getElementById("noBtn");
+if(!btn) return;
 
-    const rect = btn.getBoundingClientRect();
+const rect = btn.getBoundingClientRect();
 
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
+const centerX = rect.left + rect.width / 2;
+const centerY = rect.top + rect.height / 2;
 
-    const dx = centerX - e.clientX;
-    const dy = centerY - e.clientY;
+const distance = Math.hypot(
+    e.clientX - centerX,
+    e.clientY - centerY
+);
 
-    const distance = Math.sqrt(dx * dx + dy * dy);
+// Only react when mouse is very close
+if(distance < 70){
 
-    if(distance < 100){
+    btn.style.position = "fixed";
 
-        btn.style.position = "fixed";
+    // Move only a small amount
+    const moveDistance = 35;
 
-        let newX = rect.left + (dx / distance) * 80;
-        let newY = rect.top + (dy / distance) * 80;
+    let newX = rect.left;
+    let newY = rect.top;
 
-        newX = Math.max(
-            20,
-            Math.min(newX, window.innerWidth - rect.width - 20)
-        );
+    // Randomly move left/right/up/down
+    newX += (Math.random() > 0.5 ? moveDistance : -moveDistance);
+    newY += (Math.random() > 0.5 ? moveDistance : -moveDistance);
 
-        newY = Math.max(
-            20,
-            Math.min(newY, window.innerHeight - rect.height - 20)
-        );
+    // Keep button safely visible
+    const minX = window.innerWidth * 0.25;
+    const maxX = window.innerWidth * 0.75 - rect.width;
 
-        btn.style.left = newX + "px";
-        btn.style.top = newY + "px";
-    }
+    const minY = window.innerHeight * 0.30;
+    const maxY = window.innerHeight * 0.80 - rect.height;
+
+    newX = Math.max(minX, Math.min(newX, maxX));
+    newY = Math.max(minY, Math.min(newY, maxY));
+
+    btn.style.left = newX + "px";
+    btn.style.top = newY + "px";
+}
+
 });
 
 </script>
