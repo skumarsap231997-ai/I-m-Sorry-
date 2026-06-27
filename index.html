@@ -99,10 +99,12 @@ button{
     transform:scale(1.08);  
 }  
   
-#noBtn{  
-    background:white;  
-    color:#444;  
-}  
+#noBtn{
+    background:white;
+    color:#444;
+    position:fixed;
+    transition:left 0.15s ease, top 0.15s ease;
+} 
 </style>  </head>  <body>  <div class="container">  <h1>🥺 Will you forgive me? ❤️</h1>  <p>I really didn't mean to hurt you... 💖</p>  <button id="yesBtn" onclick="yesClicked()">Yes ❤️</button>
 
 <button id="noBtn">No 😒</button>
@@ -113,44 +115,77 @@ button{
     Your browser does not support the audio element.
 </audio>
 
-<script>  
-  
-const emojis=["🥺","🥹","😊","💖","✨","💕","🌸","🫶","❤️"];  
-  
-for(let i=0;i<40;i++){  
-  
-let e=document.createElement("div");  
-  
-e.className="emoji";  
-  
-e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];  
-  
-e.style.left=Math.random()*100+"vw";  
-  
-e.style.animationDuration=(8+Math.random()*8)+"s";  
-  
-e.style.animationDelay=Math.random()*8+"s";  
-  
-document.body.appendChild(e);  
-  
-}  
-  
-function moveButton(){  
-  
-const btn=document.getElementById("noBtn");  
-  
-btn.style.position="absolute";  
-  
-btn.style.left=Math.random()*(window.innerWidth-120)+"px";  
-  
-btn.style.top=Math.random()*(window.innerHeight-60)+"px";  
-  
-}  
-  
+<script>
+
+const emojis=["🥺","🥹","😊","💖","✨","💕","🌸","🫶","❤️"];
+
+// Floating emojis
+for(let i=0;i<40;i++){
+
+    let e=document.createElement("div");
+
+    e.className="emoji";
+
+    e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+
+    e.style.left=Math.random()*100+"vw";
+
+    e.style.animationDuration=(8+Math.random()*8)+"s";
+
+    e.style.animationDelay=Math.random()*8+"s";
+
+    document.body.appendChild(e);
+}
+
+
+// ----------------------------
+// Moving NO button
+// ----------------------------
+
+const noBtn = document.getElementById("noBtn");
+
+// Make it movable
+noBtn.style.position = "fixed";
+
+// Initial position
+noBtn.style.left = (window.innerWidth/2 + 80) + "px";
+noBtn.style.top = (window.innerHeight/2 + 70) + "px";
+
+document.addEventListener("mousemove", function(e){
+
+    const rect = noBtn.getBoundingClientRect();
+
+    const centerX = rect.left + rect.width/2;
+    const centerY = rect.top + rect.height/2;
+
+    const distance = Math.hypot(
+        e.clientX-centerX,
+        e.clientY-centerY
+    );
+
+    // Cursor is close
+    if(distance < 120){
+
+        const padding = 20;
+
+        const newX = Math.random() * (window.innerWidth - rect.width - padding*2) + padding;
+
+        const newY = Math.random() * (window.innerHeight - rect.height - padding*2) + padding;
+
+        noBtn.style.left = newX + "px";
+        noBtn.style.top = newY + "px";
+    }
+
+});
+
+
+// ----------------------------
+// YES button
+// ----------------------------
+
 function yesClicked(){
 
-    // Play the voice message
-    const audio = document.getElementById("voiceMessage");
+    const audio=document.getElementById("voiceMessage");
 
     if(audio){
         audio.play().catch(function(err){
@@ -158,15 +193,14 @@ function yesClicked(){
         });
     }
 
-    // Hide the original card
-    document.querySelector(".container").style.display = "none";
+    document.querySelector(".container").style.display="none";
 
-    // Create the thank you card
-    const thankYouCard = document.createElement("div");
+    const thankYouCard=document.createElement("div");
 
-    thankYouCard.className = "container";
+    thankYouCard.className="container";
 
-    thankYouCard.innerHTML = `
+    thankYouCard.innerHTML=`
+
         <h1 style="font-size:55px;">🥹 Thank You ❤️</h1>
 
         <h2 style="color:white;">
@@ -174,10 +208,9 @@ function yesClicked(){
         </h2>
 
         <img
-            src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif"
-            alt="Cute celebration"
-            style="width:260px;max-width:90%;border-radius:18px;margin:20px auto;display:block;"
-        />
+        src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif"
+        style="width:260px;max-width:90%;border-radius:18px;margin:20px auto;display:block;"
+        >
 
         <div style="font-size:70px;">
             🫶 🌸 💕 ✨ ❤️
@@ -186,6 +219,7 @@ function yesClicked(){
         <p style="color:white;font-size:22px;margin-top:15px;">
             You just made my day! 💞
         </p>
+
     `;
 
     document.body.appendChild(thankYouCard);
