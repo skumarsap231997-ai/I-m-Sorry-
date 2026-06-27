@@ -90,21 +90,33 @@ button{
     transition:0.3s;  
 }  
   
-#yesBtn{  
-    background:#ff4f8b;  
-    color:white;  
-}  
-  
-#yesBtn:hover{  
-    transform:scale(1.08);  
-}  
-  
+.button-container{
+    position:relative;
+    width:300px;
+    height:90px;
+    margin:20px auto;
+}
+
+#yesBtn{
+    position:absolute;
+    left:20px;
+    top:20px;
+    background:#ff4f8b;
+    color:white;
+}
+
+#yesBtn:hover{
+    transform:scale(1.08);
+}
+
 #noBtn{
+    position:absolute;
+    left:160px;
+    top:20px;
     background:white;
     color:#444;
-    position:fixed;
-    transition:left 0.15s ease, top 0.15s ease;
-} 
+    transition:0.18s ease;
+}
 </style>  </head>  <body>  <div class="container">  <h1>🥺 Will you forgive me? ❤️</h1>  <p>I really didn't mean to hurt you... 💖</p> 
 <div class="button-container">
     <button id="yesBtn" onclick="yesClicked()">Yes ❤️</button>
@@ -146,40 +158,55 @@ for(let i=0;i<40;i++){
 
 const noBtn = document.getElementById("noBtn");
 
-// Make it movable
-noBtn.style.position = "fixed";
+// Positions around the Yes button
+const positions = [
+    {left:160, top:20},
+    {left:160, top:-15},
+    {left:160, top:55},
+    {left:100, top:55},
+    {left:100, top:-15},
+    {left:190, top:40},
+    {left:130, top:60},
+    {left:180, top:0}
+];
 
-// Initial position
-noBtn.style.left = (window.innerWidth/2 + 80) + "px";
-noBtn.style.top = (window.innerHeight/2 + 70) + "px";
+let current = 0;
 
+function moveButton(){
+
+    let next;
+
+    do{
+        next = Math.floor(Math.random()*positions.length);
+    }while(next === current);
+
+    current = next;
+
+    noBtn.style.left = positions[current].left + "px";
+    noBtn.style.top = positions[current].top + "px";
+}
+
+// Desktop
 document.addEventListener("mousemove", function(e){
 
     const rect = noBtn.getBoundingClientRect();
 
-    const centerX = rect.left + rect.width/2;
-    const centerY = rect.top + rect.height/2;
-
     const distance = Math.hypot(
-        e.clientX-centerX,
-        e.clientY-centerY
+        e.clientX - (rect.left + rect.width/2),
+        e.clientY - (rect.top + rect.height/2)
     );
 
-    // Cursor is close
-    if(distance < 120){
-
-        const padding = 20;
-
-        const newX = Math.random() * (window.innerWidth - rect.width - padding*2) + padding;
-
-        const newY = Math.random() * (window.innerHeight - rect.height - padding*2) + padding;
-
-        noBtn.style.left = newX + "px";
-        noBtn.style.top = newY + "px";
+    if(distance < 90){
+        moveButton();
     }
 
 });
 
+// Mobile
+noBtn.addEventListener("touchstart", function(e){
+    e.preventDefault();
+    moveButton();
+});
 
 // ----------------------------
 // YES button
