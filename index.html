@@ -117,6 +117,17 @@ button{
     color:#444;
     transition:0.18s ease;
 }
+
+/* Hearts falling after clicking YES */
+.heart{
+position:fixed;top:-60px;font-size:28px;pointer-events:none;z-index:9999;
+animation:fallHeart linear forwards;
+}
+@keyframes fallHeart{
+0%{transform:translateY(-60px) rotate(0deg);opacity:1;}
+100%{transform:translateY(110vh) rotate(360deg);opacity:0;}
+}
+
 </style>  </head>  <body>  <div class="container">  <h1>🥺 Will you forgive me? ❤️</h1>  <p>I really didn't mean to hurt you... 💖</p> 
 <div class="button-container">
     <button id="yesBtn" onclick="yesClicked()">Yes ❤️</button>
@@ -212,7 +223,26 @@ noBtn.addEventListener("touchstart", function(e){
 // YES button
 // ----------------------------
 
+
+// Falling hearts animation
+function startHeartRain(){
+ const hearts=["❤️","💕","💖","💗","💞","💘","🌸","🫶"];
+ const interval=setInterval(function(){
+   const heart=document.createElement("div");
+   heart.className="heart";
+   heart.innerHTML=hearts[Math.floor(Math.random()*hearts.length)];
+   heart.style.left=Math.random()*100+"vw";
+   heart.style.fontSize=(22+Math.random()*30)+"px";
+   heart.style.animationDuration=(3+Math.random()*3)+"s";
+   document.body.appendChild(heart);
+   heart.addEventListener("animationend",()=>heart.remove());
+ },120);
+ setTimeout(()=>clearInterval(interval),8000);
+}
+
 function yesClicked(){
+    startHeartRain();
+
 
     const audio=document.getElementById("voiceMessage");
 
@@ -237,7 +267,7 @@ function yesClicked(){
         </h2>
 
         <img
-        src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif"
+        src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
         style="width:260px;max-width:90%;border-radius:18px;margin:20px auto;display:block;"
         >
 
